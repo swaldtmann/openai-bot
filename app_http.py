@@ -1,4 +1,4 @@
-# app.py
+# app_http.py
 # -*- coding: utf-8 -*-
 
 import os
@@ -11,12 +11,10 @@ load_dotenv()
 # Initializes your app with your bot token and signing secret
 app = App(
     token=os.environ.get("SLACK_BOT_TOKEN"),
-    signing_secret=os.environ.get("SLACK_SIGNING_SECRET"),
+    signing_secret=os.environ.get("SLACK_SIGNING_SECRET") # not required for socket mode
 )
 
 # Listens to incoming messages that contain "hello"
-# To learn available listener method arguments,
-# visit https://slack.dev/bolt-python/api-docs/slack_bolt/kwargs_injection/args.html
 @app.message("hello")
 def message_hello(message, say):
     # say() sends a message to the channel where the event was triggered
@@ -28,11 +26,11 @@ def message_hello(message, say):
                 "accessory": {
                     "type": "button",
                     "text": {"type": "plain_text", "text": "Click Me"},
-                    "action_id": "button_click",
-                },
+                    "action_id": "button_click"
+                }
             }
         ],
-        text=f"Hey there <@{message['user']}>!",
+        text=f"Hey there <@{message['user']}>!"
     )
 
 @app.action("button_click")
