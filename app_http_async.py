@@ -23,6 +23,13 @@ async def log_request(logger, body, next):
     logger.info(body)
     return await next()
 
+""" @app.message("reset")
+async def message_reset(message, say, logger):
+    global chat_log
+    chat_log = None
+    logger.info(chat_log)
+    await say(f"Chat log reset done. New conversation from now on ...")
+ """
 @app.event("message")
 async def handle_message_events(event, say, logger):
     global chat_log
@@ -32,6 +39,16 @@ async def handle_message_events(event, say, logger):
     logger.info(chat_log)
     await say(f"{answer}")
 
+@app.command("/ki-reset")
+async def reset_command(ack, body):
+    global chat_log
+    chat_log = None
+    await ack(f"Chat log reset done. New conversation from now on ...")
+
+@app.command("/ki-show-chat")
+async def reset_command(ack, say):
+    global chat_log
+    await ack(f"{chat_log}")
 
 # Start your app
 if __name__ == "__main__":
