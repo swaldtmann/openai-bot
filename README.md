@@ -49,3 +49,24 @@ pipenv shell
 python3 app_http.py &
 ngrok http 3000
 ```
+
+## Notizen
+
+https://pipenv.pypa.io/en/latest/
+
+https://stackoverflow.com/questions/57919110/how-to-set-pipenv-venv-in-project-on-per-project-basis
+python3 -m virtualenv -p python3 .venv
+pipenv install
+
+https://modwsgi.readthedocs.io/en/develop/user-guides/virtual-environments.html
+
+https://flask.palletsprojects.com/en/1.0.x/deploying/mod_wsgi/
+
+https://phoenixnap.com/kb/how-to-install-python-3-centos-7
+
+http://wiki.centos-webpanel.com/how-to-deploy-django-apps-using-apache-with-mod-wsgi-and-nginx
+https://phoenixnap.com/kb/how-to-install-python-3-centos-7
+
+https://dev.to/brandonwallace/deploy-flask-the-easy-way-with-gunicorn-and-nginx-jgc
+
+https://docs.gunicorn.org/en/stable/deploy.html#using-virtualenv

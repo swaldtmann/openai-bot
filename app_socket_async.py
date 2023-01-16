@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 from slack_bolt.app.async_app import AsyncApp
 from slack_bolt.adapter.socket_mode.async_handler import AsyncSocketModeHandler
 
-from chatbot import ask, append_interaction_to_chat_log
+from flask_app.chatbot import ask, append_interaction_to_chat_log
 
 load_dotenv()
 chat_log = None

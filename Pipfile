@@ -9,6 +9,7 @@ flask = "*"
 python-dotenv = "*"
 pyngrok = "*"
 slack-bolt = "*"
+gunicorn = "*"
 
 [dev-packages]
 
