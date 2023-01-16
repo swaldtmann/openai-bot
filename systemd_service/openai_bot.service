@@ -1,15 +1,16 @@
+# /etc/systemd/system/openai_bot.service
 
 [Unit]
-Description=myproject.service - A Flask application run with Gunicorn.
+Description=openai_bot.service - A Flask application run with Gunicorn.
 After=network.target
 
 [Service]
-User=brandon
+User=sw
 Group=www-data
-Environment="PATH=/var/www/myproject/.venv/bin"
-WorkingDirectory=/var/www/myproject/
-ExecStart=/var/www/myproject/.venv/bin/gunicorn --workers 3 \
---bind unix:/var/www/myproject/myproject.sock wsgi:app
+Environment="PATH=/var/www/openai-bot/.venv/bin"
+WorkingDirectory=/var/www/openai-bot/flask_app
+ExecStart=/var/www/openai-bot/.venv/bin/gunicorn --workers 3 --bind 0.0.0.0:3000 \
+--bind unix:/var/www/openai-bot/openai-bot.sock app:flask_app
 
 [Install]
 WantedBy=multi-user.target

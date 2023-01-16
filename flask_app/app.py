@@ -9,12 +9,15 @@ logging.basicConfig(level=logging.DEBUG)
 import os
 from slack_bolt import App
 from slack_bolt.adapter.flask import SlackRequestHandler
+from multiprocessing import Manager
+
 from dotenv import load_dotenv
 
 from chatbot import ask, append_interaction_to_chat_log
 
 load_dotenv()
-chat_log = None
+data = Manager().dict()
+data['chat_log'] = None
 
 app = App(token=os.environ["SLACK_BOT_TOKEN"],
           signing_secret=os.environ.get("SLACK_SIGNING_SECRET"))
@@ -25,22 +28,15 @@ def log_request(logger, body, next):
     logger.info(body)
     return next()
 
-""" @app.message("reset")
-def message_reset(message, say, logger):
-    global chat_log
-    chat_log = None
-    logger.info(chat_log)
-    say(f"Chat log reset done. New conversation from now on ...")
- """
 @app.event("message")
 def handle_message_events(event, say, logger):
-    global chat_log
+    global data
 #    try:
     incoming_msg = event['text']
-    answer = ask(incoming_msg, chat_log)
-    chat_log = append_interaction_to_chat_log(incoming_msg, answer, chat_log)
-    logger.info(f"# of chars in chat_log: {len(chat_log)}")
-    logger.info(chat_log)
+    answer = ask(incoming_msg, data['chat_log'])
+    data['chat_log'] = append_interaction_to_chat_log(incoming_msg, answer, data['chat_log'])
+    logger.info(f"# of chars in chat_log: {len(data['chat_log'])}")
+    logger.info(data['chat_log'])
     say(f"{answer}")
 #    except Exception as e:
 #        print(f'Error: {e}')
@@ -51,16 +47,16 @@ def handle_message_events(event, say, logger):
 
 @app.command("/ki-reset")
 def reset_command(ack, say):
-    global chat_log
-    chat_log = None
+    global data
+    data['chat_log'] = None
     ack()
     say(f"Chat log reset done. New conversation from now on ...")
 
 @app.command("/ki-show-chat")
 def reset_command(ack, say):
-    global chat_log
+    global data
     ack()
-    say(f"Chat Log: \n{chat_log}")
+    say(f"Chat Log: \n{data['chat_log']}")
 
 
 from flask import Flask, request
