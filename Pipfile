@@ -10,6 +10,7 @@ python-dotenv = "*"
 pyngrok = "*"
 slack-bolt = "*"
 gunicorn = "*"
+tenacity = "*"
 
 [dev-packages]
 
